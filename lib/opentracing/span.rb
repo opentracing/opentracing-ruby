@@ -8,7 +8,9 @@ module OpenTracing
     attr_accessor :operation_name
 
     # Span Context
-    attr_reader :context
+    def context
+      SpanContext::NOOP_INSTANCE
+    end
 
     # Creates a new {Span}
     #

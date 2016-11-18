@@ -3,7 +3,10 @@ require 'test_helper'
 class SpanTest < Minitest::Test
   def test_attributes
     assert_nil span.operation_name
-    assert_nil span.context
+  end
+
+  def test_context
+    assert_equal OpenTracing::SpanContext::NOOP_INSTANCE, span.context
   end
 
   def test_tags
