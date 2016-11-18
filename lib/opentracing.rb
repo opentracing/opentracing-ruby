@@ -8,6 +8,9 @@ require "opentracing/nil_tracer"
 module OpenTracing
   FORMAT_TEXT_MAP = 1
   FORMAT_BINARY = 2
+
+  # Ruby Specific format to handle how Rack changes environment variables.
+  # See Readme.md for more info.
   FORMAT_RACK = 3
 
   class << self
