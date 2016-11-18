@@ -3,12 +3,11 @@ require 'test_helper'
 class SpanTest < Minitest::Test
   def test_attributes
     assert_nil span.operation_name
-    assert_nil span.span_context
+    assert_nil span.context
   end
 
   def test_tags
     span.set_tag("foo", "bar")
-    assert_nil span.tags
   end
 
   def test_baggage

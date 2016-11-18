@@ -8,10 +8,7 @@ module OpenTracing
     attr_accessor :operation_name
 
     # Span Context
-    attr_reader :span_context
-
-    # Tags on the span
-    attr_reader :tags
+    attr_reader :context
 
     # Creates a new {Span}
     #
@@ -54,7 +51,7 @@ module OpenTracing
     # Finish the {Span}
     # @param end_time [Time] custom end time, if not now
     def finish(end_time: Time.now)
-      self
+      nil
     end
   end
 end
