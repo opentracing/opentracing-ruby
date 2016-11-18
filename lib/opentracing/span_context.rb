@@ -1,6 +1,8 @@
 module OpenTracing
   # SpanContext holds the data for a span that gets inherited to child spans
   class SpanContext
+    NOOP_INSTANCE = SpanContext.new.freeze
+
     attr_reader :baggage
 
     # Create a new SpanContext

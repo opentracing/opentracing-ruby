@@ -3,10 +3,13 @@ require "concurrent"
 require "opentracing/version"
 require "opentracing/span_context"
 require "opentracing/span"
-require "opentracing/nil_tracer"
+require "opentracing/noop_tracer"
 
 module OpenTracing
+  # Text format for #inject and #extract
   FORMAT_TEXT_MAP = 1
+
+  # Binary format for #inject and #extract
   FORMAT_BINARY = 2
 
   # Ruby Specific format to handle how Rack changes environment variables.
@@ -26,7 +29,7 @@ module OpenTracing
     def inject(span_context, format, carrier)
       case format
       when OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK
-        return carrier
+        return nil
       else
         warn 'Unknown inject format'
       end
@@ -41,7 +44,7 @@ module OpenTracing
     def extract(operation_name, format, carrier, tracer)
       case format
       when OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK
-        return SpanContext.new()
+        return SpanContext::NOOP_INSTANCE
       else
         warn 'Unknown extract format'
         nil
