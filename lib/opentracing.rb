@@ -1,5 +1,4 @@
 require "forwardable"
-require "concurrent"
 require "opentracing/version"
 require "opentracing/span_context"
 require "opentracing/span"
