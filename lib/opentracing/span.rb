@@ -4,8 +4,10 @@ module OpenTracing
   # See http://www.opentracing.io for more information.
   class Span
     NOOP_INSTANCE = Span.new.freeze
-    # Name of the operation
-    attr_accessor :operation_name
+
+    # Set the name of the operation
+    def operation_name=(name)
+    end
 
     # Span Context
     def context

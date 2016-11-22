@@ -2,7 +2,8 @@ require 'test_helper'
 
 class SpanTest < Minitest::Test
   def test_attributes
-    assert_nil span.operation_name
+    span.operation_name = "foo"
+    OpenTracing::Span::NOOP_INSTANCE.operation_name = "bar"
   end
 
   def test_context
