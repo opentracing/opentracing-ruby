@@ -13,7 +13,7 @@ module OpenTracing
     # Inject a span into the given carrier
     # @param span_context [SpanContext]
     # @param format [OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK]
-    # @param carrier [Hash]
+    # @param carrier [Carrier]
     def inject(span_context, format, carrier)
       case format
       when OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK
@@ -26,7 +26,7 @@ module OpenTracing
     # Extract a span from a carrier
     # @param operation_name [String]
     # @param format [OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK]
-    # @param carrier [Hash]
+    # @param carrier [Carrier]
     # @param tracer [Tracer] the tracer the span will be attached to (for finish)
     # @return [Span]
     def extract(operation_name, format, carrier)
