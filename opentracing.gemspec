@@ -6,8 +6,8 @@ require 'opentracing/version'
 Gem::Specification.new do |spec|
   spec.name          = "opentracing"
   spec.version       = OpenTracing::VERSION
-  spec.authors       = ["ngauthier", "bcronin"]
-  spec.email         = ["support@lightstep.com"]
+  spec.authors       = ["ngauthier", "bcronin", "bensigelman"]
+  spec.email         = ["info@opentracing.io"]
 
   spec.summary       = %q{OpenTracing Ruby Platform API}
   spec.homepage      = "https://github.com/opentracing/opentracing-ruby"
