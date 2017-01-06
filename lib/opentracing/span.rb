@@ -19,7 +19,7 @@ module OpenTracing
     # @param tracer [Tracer] the tracer that created this span
     # @param context [SpanContext] the context of the span
     # @return [Span] a new Span
-    def initialize(tracer:, context:)
+    def initialize(tracer, span_context)
     end
 
     # Set a tag value on this span
