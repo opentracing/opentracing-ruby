@@ -26,9 +26,8 @@ module OpenTracing
     # Extract a span from a carrier
     # @param format [OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK]
     # @param carrier [Carrier]
-    # @param tracer [Tracer] the tracer the span will be attached to (for finish)
     # @return [SpanContext]
-    def extract(format, carrier, tracer = nil)
+    def extract(format, carrier)
       case format
       when OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK
         return SpanContext::NOOP_INSTANCE
