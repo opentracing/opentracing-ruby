@@ -1,19 +1,25 @@
 module OpenTracing
   class Tracer
-    # Start a new span
-    # @param operation_name [String] The name of the operation represented by the span
-    # @param child_of [Span] A span to be used as the ChildOf reference
-    # @param start_time [Time] the start time of the span
-    # @param tags [Hash] Starting tags for the span
+    # TODO(bhs): Support FollowsFrom and multiple references
+
+    # Starts a new span.
+    #
+    # @param operation_name [String] The operation name for the Span
+    # @param child_of [SpanContext] SpanContext that acts as a parent to
+    #        the newly-started Span. If a Span instance is provided, its
+    #        .span_context is automatically substituted.
+    # @param start_time [Time] When the Span started, if not now
+    # @param tags [Hash] Tags to assign to the Span at start time
+    # @return [Span] The newly-started Span
     def start_span(operation_name, child_of: nil, start_time: nil, tags: nil)
       Span::NOOP_INSTANCE
     end
 
-
-    # Inject a span into the given carrier
-    # @param span_context [SpanContext]
+    # Inject a SpanContext into the given carrier
+    #
+    # @param spancontext [SpanContext]
     # @param format [OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK]
-    # @param carrier [Carrier]
+    # @param carrier [Hash]
     def inject(span_context, format, carrier)
       case format
       when OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK
@@ -23,13 +29,12 @@ module OpenTracing
       end
     end
 
-    # Extract a span from a carrier
-    # @param operation_name [String]
+    # Extract a SpanContext in the given format from the given carrier.
+    #
     # @param format [OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK]
-    # @param carrier [Carrier]
-    # @param tracer [Tracer] the tracer the span will be attached to (for finish)
-    # @return [Span]
-    def extract(operation_name, format, carrier)
+    # @param carrier [Carrier] The carrier type dictated by the specified format
+    # @return [SpanContext] the extracted SpanContext or nil if none could be found
+    def extract(format, carrier)
       case format
       when OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK
         return SpanContext::NOOP_INSTANCE
