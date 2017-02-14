@@ -96,7 +96,7 @@ it will not be possible to discern once Rack has processed it.
 ```ruby
 class MyRackApp
   def call(env)
-    extracted_ctx = @tracer.extract("my_app", OpenTracing::FORMAT_RACK, env)
+    extracted_ctx = @tracer.extract(OpenTracing::FORMAT_RACK, env)
     span = @tracer.start_span("my_app", child_of: extracted_ctx)
     span.finish
     [200, {}, ["hello"]]
