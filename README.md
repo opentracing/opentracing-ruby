@@ -80,7 +80,7 @@ client = Net::HTTP.new("http://myservice")
 req = Net::HTTP::Post.new("/")
 
 span = OpenTracing.start_span("my_span")
-OpenTracing.inject(span.context, OpenTracing::FORMAT_HTTP_HEADER, req)
+OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, env)
 res = client.request(req)
 #...
 ```
@@ -96,7 +96,8 @@ it will not be possible to discern once Rack has processed it.
 ```ruby
 class MyRackApp
   def call(env)
-    span = @tracer.extract("my_app", OpenTracing::FORMAT_RACK, env, OpenTracing.global_tracer)
+    extracted_ctx = @tracer.extract(OpenTracing::FORMAT_RACK, env)
+    span = @tracer.start_span("my_app", child_of: extracted_ctx)
     span.finish
     [200, {}, ["hello"]]
   end

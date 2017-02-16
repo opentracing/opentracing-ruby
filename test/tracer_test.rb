@@ -27,20 +27,20 @@ class TracerTest < Minitest::Test
   end
 
   def test_extract_text_map
-    span = tracer.extract("operation_name", OpenTracing::FORMAT_TEXT_MAP, {})
+    span = tracer.extract(OpenTracing::FORMAT_TEXT_MAP, {})
   end
 
   def test_extract_binary
-    tracer.extract(nil, OpenTracing::FORMAT_BINARY, nil)
+    tracer.extract(OpenTracing::FORMAT_BINARY, nil)
   end
 
   def test_extract_rack
-    tracer.extract("operation_name", OpenTracing::FORMAT_RACK, {})
+    tracer.extract(OpenTracing::FORMAT_RACK, {})
   end
 
   def test_extract_unknown
     assert_warn "Unknown extract format\n" do
-      tracer.extract(nil, 999, nil)
+      tracer.extract(999, nil)
     end
   end
 
