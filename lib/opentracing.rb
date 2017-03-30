@@ -30,8 +30,8 @@ module OpenTracing
 
   class << self
     extend Forwardable
-    # Global tracer to be used when OpenTracing.start_span is called
+    # Global tracer to be used when OpenTracing.start_span, inject or extract is called
     attr_accessor :global_tracer
-    def_delegator :global_tracer, :start_span
+    def_delegators :global_tracer, :start_span, :inject, :extract
   end
 end
