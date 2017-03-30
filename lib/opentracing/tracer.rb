@@ -5,9 +5,9 @@ module OpenTracing
     # Starts a new span.
     #
     # @param operation_name [String] The operation name for the Span
-    # @param child_of [SpanContext] SpanContext that acts as a parent to
+    # @param child_of [SpanContext, Span] SpanContext that acts as a parent to
     #        the newly-started Span. If a Span instance is provided, its
-    #        .span_context is automatically substituted.
+    #        context is automatically substituted.
     # @param start_time [Time] When the Span started, if not now
     # @param tags [Hash] Tags to assign to the Span at start time
     # @return [Span] The newly-started Span
