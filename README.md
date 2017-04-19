@@ -75,14 +75,28 @@ span.finish
 
 ### Serializing to the wire
 
+Using `Net::HTTP`:
 ```ruby
 client = Net::HTTP.new("http://myservice")
 req = Net::HTTP::Post.new("/")
 
 span = OpenTracing.start_span("my_span")
-OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, env)
+OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, req)
 res = client.request(req)
 #...
+```
+
+Using Faraday middleware:
+```ruby
+class TraceMiddleware < Faraday::Middleware
+  def call(env)
+    span = OpenTracing.start_span("my_span")
+    OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, env)
+    @app.call(env).on_complete do
+      span.finish
+    end
+  end
+end
 ```
 
 ### Deserializing from the wire
