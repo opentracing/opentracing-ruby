@@ -41,7 +41,7 @@ module OpenTracing
 
     # Get a baggage item
     # @param key [String] the key of the baggage item
-    # @return Value of the baggage item
+    # @return [String] value of the baggage item
     def get_baggage_item(key)
       nil
     end
