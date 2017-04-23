@@ -1,5 +1,5 @@
 module OpenTracing
-  # Span represents an OpenTracer Span
+  # Span represents an OpenTracing Span
   #
   # See http://www.opentracing.io for more information.
   class Span
