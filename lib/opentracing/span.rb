@@ -6,6 +6,8 @@ module OpenTracing
     NOOP_INSTANCE = Span.new.freeze
 
     # Set the name of the operation
+    #
+    # @param [String] name
     def operation_name=(name)
     end
 
