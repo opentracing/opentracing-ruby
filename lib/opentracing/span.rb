@@ -12,6 +12,8 @@ module OpenTracing
     end
 
     # Span Context
+    #
+    # @return [SpanContext]
     def context
       SpanContext::NOOP_INSTANCE
     end
