@@ -30,8 +30,6 @@ class SpanTest < Minitest::Test
   private
 
   def span
-    tracer = Minitest::Mock.new
-    context = OpenTracing::SpanContext.new
-    OpenTracing::Span.new(tracer, context)
+    OpenTracing::Span.new
   end
 end

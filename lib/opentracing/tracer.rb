@@ -33,7 +33,7 @@ module OpenTracing
     #
     # @param format [OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK]
     # @param carrier [Carrier] A carrier object of the type dictated by the specified `format`
-    # @return [SpanContext] the extracted SpanContext or nil if none could be found
+    # @return [SpanContext, nil] the extracted SpanContext or nil if none could be found
     def extract(format, carrier)
       case format
       when OpenTracing::FORMAT_TEXT_MAP, OpenTracing::FORMAT_BINARY, OpenTracing::FORMAT_RACK

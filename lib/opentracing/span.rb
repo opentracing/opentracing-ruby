@@ -1,25 +1,21 @@
 module OpenTracing
-  # Span represents an OpenTracer Span
+  # Span represents an OpenTracing Span
   #
   # See http://www.opentracing.io for more information.
   class Span
     NOOP_INSTANCE = Span.new.freeze
 
     # Set the name of the operation
+    #
+    # @param [String] name
     def operation_name=(name)
     end
 
     # Span Context
+    #
+    # @return [SpanContext]
     def context
       SpanContext::NOOP_INSTANCE
-    end
-
-    # Creates a new {Span}
-    #
-    # @param tracer [Tracer] the tracer that created this span
-    # @param span_context [SpanContext] the context of the span
-    # @return [Span] a new Span
-    def initialize(tracer, span_context)
     end
 
     # Set a tag value on this span
@@ -39,7 +35,7 @@ module OpenTracing
 
     # Get a baggage item
     # @param key [String] the key of the baggage item
-    # @return Value of the baggage item
+    # @return [String] value of the baggage item
     def get_baggage_item(key)
       nil
     end
