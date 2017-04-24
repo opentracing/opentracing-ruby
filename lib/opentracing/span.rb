@@ -18,12 +18,6 @@ module OpenTracing
       SpanContext::NOOP_INSTANCE
     end
 
-    # Creates a new {Span}
-    #
-    # @return [Span] a new Span
-    def initialize(*)
-    end
-
     # Set a tag value on this span
     # @param key [String] the key of the tag
     # @param value [String, Numeric, Boolean] the value of the tag. If it's not
