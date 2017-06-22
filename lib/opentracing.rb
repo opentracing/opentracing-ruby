@@ -2,6 +2,7 @@ require "forwardable"
 require "opentracing/version"
 require "opentracing/span_context"
 require "opentracing/span"
+require "opentracing/reference"
 require "opentracing/tracer"
 
 module OpenTracing

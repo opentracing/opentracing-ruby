@@ -5,6 +5,12 @@ class TracerTest < Minitest::Test
     assert_equal OpenTracing::Span::NOOP_INSTANCE, OpenTracing::Tracer.new.start_span("operation_name")
   end
 
+  def test_start_span_allows_references
+    references = [OpenTracing::Reference.child_of(OpenTracing::Span::NOOP_INSTANCE)]
+    assert_equal OpenTracing::Span::NOOP_INSTANCE,
+      OpenTracing::Tracer.new.start_span("operation_name", references: references)
+  end
+
   def test_inject_text_map
     context = OpenTracing::SpanContext::NOOP_INSTANCE
     carrier = {}
