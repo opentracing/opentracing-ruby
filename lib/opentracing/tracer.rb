@@ -1,17 +1,25 @@
 module OpenTracing
   class Tracer
-    # TODO(bhs): Support FollowsFrom and multiple references
-
     # Starts a new span.
     #
     # @param operation_name [String] The operation name for the Span
+    #
     # @param child_of [SpanContext, Span] SpanContext that acts as a parent to
     #        the newly-started Span. If a Span instance is provided, its
-    #        context is automatically substituted.
+    #        context is automatically substituted. See [Reference] for more
+    #        information.
+    #
+    #   If specified, the `references` paramater must be omitted.
+    #
+    # @param references [Array<Reference>] An array of reference
+    #   objects that identify one or more parent SpanContexts.
+    #
     # @param start_time [Time] When the Span started, if not now
+    #
     # @param tags [Hash] Tags to assign to the Span at start time
+    #
     # @return [Span] The newly-started Span
-    def start_span(operation_name, child_of: nil, start_time: Time.now, tags: nil)
+    def start_span(operation_name, child_of: nil, references: nil, start_time: Time.now, tags: nil)
       Span::NOOP_INSTANCE
     end
 
