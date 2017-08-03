@@ -24,10 +24,7 @@ module OpenTracing
     #   ])
     #
     def self.child_of(context)
-      if context.is_a?(Span)
-        context = context.context
-      end
-
+      context = context.context if context.is_a?(Span)
       Reference.new(CHILD_OF, context)
     end
 
@@ -64,7 +61,6 @@ module OpenTracing
     #
     def self.follows_from(context)
       context = context.context if context.is_a?(Span)
-
       Reference.new(FOLLOWS_FROM, context)
     end
 
@@ -73,7 +69,7 @@ module OpenTracing
       @context = context
     end
 
-    # Return [String] reference type
+    # @return [String] reference type
     attr_reader :type
 
     # @return [SpanContext] the context of a span this reference is referencing
