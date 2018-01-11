@@ -36,3 +36,6 @@ module OpenTracing
     def_delegators :global_tracer, :start_span, :inject, :extract
   end
 end
+
+# Default to the no-op tracer
+OpenTracing.global_tracer = OpenTracing::Tracer.new

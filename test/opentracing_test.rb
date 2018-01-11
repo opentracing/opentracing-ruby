@@ -10,8 +10,8 @@ class OpenTracingTest < Minitest::Test
     OpenTracing.global_tracer = @original_global_tracer
   end
 
-  def test_global_tracer_is_nil_by_default
-    assert_nil OpenTracing.global_tracer
+  def test_global_tracer_is_not_nil_by_default
+    assert OpenTracing.global_tracer
   end
 
   def test_global_tracer_start_span
