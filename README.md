@@ -77,7 +77,7 @@ span.finish
 
 Using `Net::HTTP`:
 ```ruby
-client = Net::HTTP.new("http://myservice")
+client = Net::HTTP.new("myservice.com")
 req = Net::HTTP::Post.new("/")
 
 span = OpenTracing.start_span("my_span")
