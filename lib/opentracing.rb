@@ -4,6 +4,7 @@ require "opentracing/span_context"
 require "opentracing/span"
 require "opentracing/reference"
 require "opentracing/tracer"
+require "opentracing/scope"
 
 module OpenTracing
   # Text format for Tracer#inject and Tracer#extract.
