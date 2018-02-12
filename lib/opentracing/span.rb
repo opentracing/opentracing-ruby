@@ -44,7 +44,7 @@ module OpenTracing
     # @param event [String] event name for the log
     # @param timestamp [Time] time of the log
     # @param fields [Hash] Additional information to log
-    def log(event: nil, timestamp: Time.now, **fields)
+    def log(timestamp: Time.now, **fields)
       nil
     end
 
