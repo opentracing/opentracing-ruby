@@ -28,6 +28,9 @@ module OpenTracing
     #   References#CHILD_OF reference to the ScopeManager#active.
     # @param finish_on_close [Boolean] whether span should automatically be
     #   finished when Scope#close is called
+    # @yield [Scope] If an optional block is passed to start_active it will
+    #   yield the newly-started Scope. If `finish_on_close` is true then the
+    #   Span will be finished automatically after the block is executed.
     # @return [Scope] The newly-started and activated Scope
     def start_active(operation_name,
                      child_of: nil,
@@ -36,7 +39,9 @@ module OpenTracing
                      tags: nil,
                      ignore_active_scope: false,
                      finish_on_close: true)
-      Scope::NOOP_INSTANCE
+      Scope::NOOP_INSTANCE.tap do |scope|
+        yield scope if block_given?
+      end
     end
 
     # Like #start_active, but the returned Span has not been registered via the

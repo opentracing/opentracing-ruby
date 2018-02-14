@@ -34,6 +34,13 @@ class TracerTest < Minitest::Test
     assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
   end
 
+  def test_start_active_accepts_block
+    OpenTracing::Tracer.new.start_active("operation_name") do |scope|
+      assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+      assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+    end
+  end
+
   def test_start
     span = OpenTracing::Tracer.new.start("operation_name")
     assert_equal OpenTracing::Span::NOOP_INSTANCE, span
