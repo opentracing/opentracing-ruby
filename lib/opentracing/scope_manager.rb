@@ -8,6 +8,7 @@ module OpenTracing
   # ScopeManager#active
 
   class ScopeManager
+    NOOP_INSTANCE = ScopeManager.new.freeze
 
     # Make a span instance active.
     #

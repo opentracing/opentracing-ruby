@@ -2,13 +2,47 @@ require 'test_helper'
 
 class TracerTest < Minitest::Test
   def test_start_span
-    assert_equal OpenTracing::Span::NOOP_INSTANCE, OpenTracing::Tracer.new.start_span("operation_name")
+    silence_logger do
+      assert_equal OpenTracing::Span::NOOP_INSTANCE, OpenTracing::Tracer.new.start_span("operation_name")
+    end
   end
 
   def test_start_span_allows_references
+    silence_logger do
+      references = [OpenTracing::Reference.child_of(OpenTracing::Span::NOOP_INSTANCE)]
+      assert_equal OpenTracing::Span::NOOP_INSTANCE,
+        OpenTracing::Tracer.new.start_span("operation_name", references: references)
+      end
+  end
+
+  def test_start_span_deprecated
+    assert_warn "Tracer#start_span is deprecated and will be removed from opentracing-ruby\n" do
+      OpenTracing::Tracer.new.start_span("operation_name")
+    end
+  end
+
+  def test_start_active
+    scope = OpenTracing::Tracer.new.start_active("operation_name")
+    assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+  end
+
+  def test_start_active_allows_references
     references = [OpenTracing::Reference.child_of(OpenTracing::Span::NOOP_INSTANCE)]
-    assert_equal OpenTracing::Span::NOOP_INSTANCE,
-      OpenTracing::Tracer.new.start_span("operation_name", references: references)
+    scope = OpenTracing::Tracer.new.start_active("operation_name", references: references)
+    assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+  end
+
+  def test_start
+    span = OpenTracing::Tracer.new.start("operation_name")
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, span
+  end
+
+  def test_start_allows_references
+    references = [OpenTracing::Reference.child_of(OpenTracing::Span::NOOP_INSTANCE)]
+    span = OpenTracing::Tracer.new.start("operation_name", references: references)
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, span
   end
 
   def test_inject_text_map
@@ -50,6 +84,10 @@ class TracerTest < Minitest::Test
     end
   end
 
+  def test_scope_manager
+    assert_equal OpenTracing::ScopeManager::NOOP_INSTANCE, tracer.scope_manager
+  end
+
   private
 
   def assert_warn(msg, &block)
@@ -59,6 +97,17 @@ class TracerTest < Minitest::Test
       $stderr = str
       block.call
       assert_equal msg, str.string
+    ensure
+      $stderr = original_stderr
+    end
+  end
+
+  def silence_logger(&block)
+    original_stderr = $stderr
+    begin
+      str = StringIO.new
+      $stderr = str
+      block.call
     ensure
       $stderr = original_stderr
     end
