@@ -20,7 +20,7 @@ class SpanTest < Minitest::Test
   end
 
   def test_log
-    assert_nil span.log(event: "event", timestamp: Time.now, foo: "bar")
+    assert_nil span.log(timestamp: Time.now, foo: "bar")
   end
 
   def test_finish
