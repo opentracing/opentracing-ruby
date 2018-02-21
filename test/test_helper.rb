@@ -11,3 +11,16 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'opentracing'
 
 require 'minitest/autorun'
+
+
+def assert_warn(msg, &block)
+  original_stderr = $stderr
+  begin
+    str = StringIO.new
+    $stderr = str
+    block.call
+    assert_equal msg, str.string
+  ensure
+    $stderr = original_stderr
+  end
+end

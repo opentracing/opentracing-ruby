@@ -35,18 +35,6 @@ class SpanTest < Minitest::Test
   end
 
   private
-  def assert_warn(msg, &block)
-    original_stderr = $stderr
-    begin
-      str = StringIO.new
-      $stderr = str
-      block.call
-      assert_equal msg, str.string
-    ensure
-      $stderr = original_stderr
-    end
-  end
-
   def span
     OpenTracing::Span.new
   end
