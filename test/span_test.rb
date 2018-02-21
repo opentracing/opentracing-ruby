@@ -19,8 +19,15 @@ class SpanTest < Minitest::Test
     assert_nil span.get_baggage_item(:foo)
   end
 
-  def test_log
-    assert_nil span.log(event: "event", timestamp: Time.now, foo: "bar")
+  def test_log_deprecated
+    assert_warn "Span#log is deprecated.  Please use Span#log_kv instead.\n" do
+      assert_nil span.log(event: "event", timestamp: Time.now, foo: "bar")
+    end
+  end
+
+
+  def test_log_kv
+    assert_nil span.log_kv(timestamp: Time.now, foo: "bar")
   end
 
   def test_finish
@@ -28,6 +35,17 @@ class SpanTest < Minitest::Test
   end
 
   private
+  def assert_warn(msg, &block)
+    original_stderr = $stderr
+    begin
+      str = StringIO.new
+      $stderr = str
+      block.call
+      assert_equal msg, str.string
+    ensure
+      $stderr = original_stderr
+    end
+  end
 
   def span
     OpenTracing::Span.new
