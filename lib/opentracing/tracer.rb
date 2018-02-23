@@ -32,19 +32,19 @@ module OpenTracing
     #   yield the newly-started Scope. If `finish_on_close` is true then the
     #   Span will be finished automatically after the block is executed.
     # @return [Scope] The newly-started and activated Scope
-    def start_active(operation_name,
-                     child_of: nil,
-                     references: nil,
-                     start_time: Time.now,
-                     tags: nil,
-                     ignore_active_scope: false,
-                     finish_on_close: true)
+    def start_active_span(operation_name,
+                          child_of: nil,
+                          references: nil,
+                          start_time: Time.now,
+                          tags: nil,
+                          ignore_active_scope: false,
+                          finish_on_close: true)
       Scope::NOOP_INSTANCE.tap do |scope|
         yield scope if block_given?
       end
     end
 
-    # Like #start_active, but the returned Span has not been registered via the
+    # Like #start_active_span, but the returned Span has not been registered via the
     # ScopeManager.
     #
     # @param operation_name [String] The operation name for the Span
@@ -62,37 +62,12 @@ module OpenTracing
     #   References#CHILD_OF reference to the ScopeManager#active.
     # @return [Span] the newly-started Span instance, which has not been
     #   automatically registered via the ScopeManager
-    def start(operation_name,
-              child_of: nil,
-              references: nil,
-              start_time: Time.now,
-              tags: nil,
-              ignore_active_scope: false)
-      Span::NOOP_INSTANCE
-    end
-
-    # Starts a new span.
-    #
-    # @deprecated Use {#start_active} or {#start} instead.
-    #
-    # @param operation_name [String] The operation name for the Span
-    # @param child_of [SpanContext, Span] SpanContext that acts as a parent to
-    #        the newly-started Span. If a Span instance is provided, its
-    #        context is automatically substituted. See [Reference] for more
-    #        information.
-    #
-    #   If specified, the `references` paramater must be omitted.
-    # @param references [Array<Reference>] An array of reference
-    #   objects that identify one or more parent SpanContexts.
-    # @param start_time [Time] When the Span started, if not now
-    # @param tags [Hash] Tags to assign to the Span at start time
-    # @return [Span] The newly-started Span
     def start_span(operation_name,
                    child_of: nil,
                    references: nil,
                    start_time: Time.now,
-                   tags: nil)
-      warn 'Tracer#start_span is deprecated and will be removed from opentracing-ruby'
+                   tags: nil,
+                   ignore_active_scope: false)
       Span::NOOP_INSTANCE
     end
 

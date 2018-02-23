@@ -26,8 +26,8 @@ module OpenTracing
     # currently active Span.
     #
     # If there is a non-null Scope, its wrapped Span becomes an implicit parent
-    # (as Reference#CHILD_OF) of any newly-created Span at Tracer#start_active or
-    # Tracer#start time.
+    # (as Reference#CHILD_OF) of any newly-created Span at Tracer#start_active_span
+    # or Tracer#start_span time.
     def active
       Scope::NOOP_INSTANCE
     end
