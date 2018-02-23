@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.0
+* The tracer now implements the OpenTracing Scope API for in-process scope propagation([#21](https://github.com/opentracing/opentracing-ruby/pull/21))
+
 ## 0.3.2
 
 * Addressing Ruby style issues ([#14](https://github.com/opentracing/opentracing-ruby/pull/14))
