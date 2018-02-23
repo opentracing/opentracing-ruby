@@ -5,17 +5,17 @@ module OpenTracing
   class Scope
     NOOP_INSTANCE = Scope.new.freeze
 
-    # Return the span scoped by this scope
+    # Return the Span scoped by this Scope
     #
     # @return [Span]
     def span
       Span::NOOP_INSTANCE
     end
 
-    # Mark the end of the active period for the current thread and scope,
-    # updating the ScopeManager#active() in the process.
+    # Mark the end of the active period for the current thread and Scope,
+    # updating the ScopeManager#active in the process.
     #
-    # NOTE: Calling close more than once on a single scope instance leads to
+    # NOTE: Calling close more than once on a single Scope instance leads to
     # undefined behavior.
     def close
     end
