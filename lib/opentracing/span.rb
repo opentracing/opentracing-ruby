@@ -40,7 +40,10 @@ module OpenTracing
       nil
     end
 
-    # ** Deprecated **
+    # @deprecated Use {#log_kv} instead.
+    # Reason: event is an optional standard log field defined in spec and not required.  Also,
+    # method name {#log_kv} is more consistent with other language implementations such as Python and Go.
+    #
     # Add a log entry to this span
     # @param event [String] event name for the log
     # @param timestamp [Time] time of the log
