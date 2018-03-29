@@ -11,6 +11,26 @@ class TracerTest < Minitest::Test
       OpenTracing::Tracer.new.start_span("operation_name", references: references)
   end
 
+  def test_start_active_span
+    scope = OpenTracing::Tracer.new.start_active_span("operation_name")
+    assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+  end
+
+  def test_start_active_span_allows_references
+    references = [OpenTracing::Reference.child_of(OpenTracing::Span::NOOP_INSTANCE)]
+    scope = OpenTracing::Tracer.new.start_active_span("operation_name", references: references)
+    assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+  end
+
+  def test_start_active_span_accepts_block
+    OpenTracing::Tracer.new.start_active_span("operation_name") do |scope|
+      assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+      assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+    end
+  end
+
   def test_inject_text_map
     context = OpenTracing::SpanContext::NOOP_INSTANCE
     carrier = {}
@@ -50,20 +70,11 @@ class TracerTest < Minitest::Test
     end
   end
 
-  private
-
-  def assert_warn(msg, &block)
-    original_stderr = $stderr
-    begin
-      str = StringIO.new
-      $stderr = str
-      block.call
-      assert_equal msg, str.string
-    ensure
-      $stderr = original_stderr
-    end
+  def test_scope_manager
+    assert_equal OpenTracing::ScopeManager::NOOP_INSTANCE, tracer.scope_manager
   end
 
+  private
   def tracer
     OpenTracing::Tracer.new
   end
