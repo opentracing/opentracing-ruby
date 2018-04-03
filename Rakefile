@@ -10,4 +10,8 @@ end
 
 RuboCop::RakeTask.new(:rubocop)
 
-task default: %i[rubocop test]
+if RUBY_PLATFORM == 'java'
+  task default: :test
+else
+  task default: %i[rubocop test]
+end
