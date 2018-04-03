@@ -1,0 +1,8 @@
+Lint/UnusedMethodArgument:
+  Enabled: no
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/ParameterLists:
+  Enabled: no

@@ -1,4 +1,10 @@
 module OpenTracing
+  # Tracer is the entry point API between instrumentation code and the tracing
+  # implementation.
+  #
+  # This implementation both defines the public Tracer API, and provides a
+  # default no-op behavior.
+  #
   class Tracer
     # @return [ScopeManager] the current ScopeManager, which may be a no-op but
     #   may not be nil.

@@ -8,8 +8,7 @@ module OpenTracing
     # Set the name of the operation
     #
     # @param [String] name
-    def operation_name=(name)
-    end
+    def operation_name=(name); end
 
     # Span Context
     #
@@ -49,7 +48,7 @@ module OpenTracing
     # @param timestamp [Time] time of the log
     # @param fields [Hash] Additional information to log
     def log(event: nil, timestamp: Time.now, **fields)
-      warn "Span#log is deprecated.  Please use Span#log_kv instead."
+      warn 'Span#log is deprecated.  Please use Span#log_kv instead.'
       nil
     end
 
