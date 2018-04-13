@@ -6,7 +6,7 @@ module OpenTracing
   # The ScopeManager interface abstracts both the activation of Span instances
   # via ScopeManager#activate and access to an active Span/Scope via
   # ScopeManager#active
-
+  #
   class ScopeManager
     NOOP_INSTANCE = ScopeManager.new.freeze
 

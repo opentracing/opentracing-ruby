@@ -1,4 +1,5 @@
 module OpenTracing
+  #:nodoc:
   class Reference
     CHILD_OF = 'child_of'.freeze
     FOLLOWS_FROM = 'follows_from'.freeze

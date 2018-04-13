@@ -2,8 +2,8 @@ require 'test_helper'
 
 class SpanTest < Minitest::Test
   def test_attributes
-    span.operation_name = "foo"
-    OpenTracing::Span::NOOP_INSTANCE.operation_name = "bar"
+    span.operation_name = 'foo'
+    OpenTracing::Span::NOOP_INSTANCE.operation_name = 'bar'
   end
 
   def test_context
@@ -11,7 +11,7 @@ class SpanTest < Minitest::Test
   end
 
   def test_tags
-    span.set_tag("foo", "bar")
+    span.set_tag('foo', 'bar')
   end
 
   def test_baggage
@@ -21,13 +21,12 @@ class SpanTest < Minitest::Test
 
   def test_log_deprecated
     assert_warn "Span#log is deprecated.  Please use Span#log_kv instead.\n" do
-      assert_nil span.log(event: "event", timestamp: Time.now, foo: "bar")
+      assert_nil span.log(event: 'event', timestamp: Time.now, foo: 'bar')
     end
   end
 
-
   def test_log_kv
-    assert_nil span.log_kv(timestamp: Time.now, foo: "bar")
+    assert_nil span.log_kv(timestamp: Time.now, foo: 'bar')
   end
 
   def test_finish
@@ -35,6 +34,7 @@ class SpanTest < Minitest::Test
   end
 
   private
+
   def span
     OpenTracing::Span.new
   end

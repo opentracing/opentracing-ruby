@@ -37,8 +37,8 @@ class OpenTracingTest < Minitest::Test
     OpenTracing.global_tracer = tracer
 
     span = Minitest::Mock.new
-    tracer.expect(:start_span, span, ["span"])
-    OpenTracing.start_span("span")
+    tracer.expect(:start_span, span, ['span'])
+    OpenTracing.start_span('span')
   end
 
   def test_global_tracer_inject

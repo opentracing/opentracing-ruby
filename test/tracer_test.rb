@@ -2,30 +2,30 @@ require 'test_helper'
 
 class TracerTest < Minitest::Test
   def test_start_span
-    assert_equal OpenTracing::Span::NOOP_INSTANCE, OpenTracing::Tracer.new.start_span("operation_name")
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, OpenTracing::Tracer.new.start_span('operation_name')
   end
 
   def test_start_span_allows_references
     references = [OpenTracing::Reference.child_of(OpenTracing::Span::NOOP_INSTANCE)]
     assert_equal OpenTracing::Span::NOOP_INSTANCE,
-      OpenTracing::Tracer.new.start_span("operation_name", references: references)
+                 OpenTracing::Tracer.new.start_span('operation_name', references: references)
   end
 
   def test_start_active_span
-    scope = OpenTracing::Tracer.new.start_active_span("operation_name")
+    scope = OpenTracing::Tracer.new.start_active_span('operation_name')
     assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
     assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
   end
 
   def test_start_active_span_allows_references
     references = [OpenTracing::Reference.child_of(OpenTracing::Span::NOOP_INSTANCE)]
-    scope = OpenTracing::Tracer.new.start_active_span("operation_name", references: references)
+    scope = OpenTracing::Tracer.new.start_active_span('operation_name', references: references)
     assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
     assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
   end
 
   def test_start_active_span_accepts_block
-    OpenTracing::Tracer.new.start_active_span("operation_name") do |scope|
+    OpenTracing::Tracer.new.start_active_span('operation_name') do |scope|
       assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
       assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
     end
@@ -53,7 +53,7 @@ class TracerTest < Minitest::Test
   end
 
   def test_extract_text_map
-    span = tracer.extract(OpenTracing::FORMAT_TEXT_MAP, {})
+    tracer.extract(OpenTracing::FORMAT_TEXT_MAP, {})
   end
 
   def test_extract_binary
@@ -75,6 +75,7 @@ class TracerTest < Minitest::Test
   end
 
   private
+
   def tracer
     OpenTracing::Tracer.new
   end

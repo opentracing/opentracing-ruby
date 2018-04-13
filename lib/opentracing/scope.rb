@@ -17,7 +17,6 @@ module OpenTracing
     #
     # NOTE: Calling close more than once on a single Scope instance leads to
     # undefined behavior.
-    def close
-    end
+    def close; end
   end
 end

@@ -1,12 +1,13 @@
-require "forwardable"
-require "opentracing/version"
-require "opentracing/span_context"
-require "opentracing/span"
-require "opentracing/reference"
-require "opentracing/tracer"
-require "opentracing/scope"
-require "opentracing/scope_manager"
+require 'forwardable'
+require 'opentracing/version'
+require 'opentracing/span_context'
+require 'opentracing/span'
+require 'opentracing/reference'
+require 'opentracing/tracer'
+require 'opentracing/scope'
+require 'opentracing/scope_manager'
 
+#:nodoc:
 module OpenTracing
   # Text format for Tracer#inject and Tracer#extract.
   #
