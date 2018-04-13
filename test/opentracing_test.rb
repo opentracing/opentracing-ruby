@@ -14,6 +14,24 @@ class OpenTracingTest < Minitest::Test
     assert OpenTracing.global_tracer
   end
 
+  def test_global_tracer_scope_manager
+    tracer = Minitest::Mock.new
+    OpenTracing.global_tracer = tracer
+
+    scope = Minitest::Mock.new
+    tracer.expect(:scope_manager, scope)
+    OpenTracing.scope_manager
+  end
+
+  def test_global_tracer_start_active_span
+    tracer = Minitest::Mock.new
+    OpenTracing.global_tracer = tracer
+
+    scope = Minitest::Mock.new
+    tracer.expect(:start_active_span, scope, ["span"])
+    OpenTracing.start_active_span("span")
+  end
+
   def test_global_tracer_start_span
     tracer = Minitest::Mock.new
     OpenTracing.global_tracer = tracer
