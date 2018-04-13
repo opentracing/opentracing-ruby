@@ -8,8 +8,7 @@ module OpenTracing
     # Set the name of the operation
     #
     # @param [String] name
-    def operation_name=(name)
-    end
+    def operation_name=(name); end
 
     # Span Context
     #
@@ -40,11 +39,23 @@ module OpenTracing
       nil
     end
 
+    # @deprecated Use {#log_kv} instead.
+    # Reason: event is an optional standard log field defined in spec and not required.  Also,
+    # method name {#log_kv} is more consistent with other language implementations such as Python and Go.
+    #
     # Add a log entry to this span
     # @param event [String] event name for the log
     # @param timestamp [Time] time of the log
     # @param fields [Hash] Additional information to log
     def log(event: nil, timestamp: Time.now, **fields)
+      warn 'Span#log is deprecated.  Please use Span#log_kv instead.'
+      nil
+    end
+
+    # Add a log entry to this span
+    # @param timestamp [Time] time of the log
+    # @param fields [Hash] Additional information to log
+    def log_kv(timestamp: Time.now, **fields)
       nil
     end
 

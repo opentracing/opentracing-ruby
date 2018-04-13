@@ -25,7 +25,7 @@ And then execute:
 Or install it yourself as:
 
     $ gem install opentracing
-    
+
 `opentracing` supports Ruby 2.0+.
 
 ## Usage
@@ -45,7 +45,7 @@ OpenTracing.global_tracer = MyTracerImplementation.New(...)
 ```
 
 Where `MyTracerImplementation` is your tracer. For testing, you can use
-the provided `OpenTracing::NilTracer`
+the provided `OpenTracing::Tracer`
 
 ### Non-Singleton initialization
 

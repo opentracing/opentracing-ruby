@@ -1,10 +1,13 @@
-require "forwardable"
-require "opentracing/version"
-require "opentracing/span_context"
-require "opentracing/span"
-require "opentracing/reference"
-require "opentracing/tracer"
+require 'forwardable'
+require 'opentracing/version'
+require 'opentracing/span_context'
+require 'opentracing/span'
+require 'opentracing/reference'
+require 'opentracing/tracer'
+require 'opentracing/scope'
+require 'opentracing/scope_manager'
 
+#:nodoc:
 module OpenTracing
   # Text format for Tracer#inject and Tracer#extract.
   #
@@ -33,7 +36,8 @@ module OpenTracing
     extend Forwardable
     # Global tracer to be used when OpenTracing.start_span, inject or extract is called
     attr_accessor :global_tracer
-    def_delegators :global_tracer, :start_span, :inject, :extract
+    def_delegators :global_tracer, :scope_manager, :start_active_span,
+                   :start_span, :inject, :extract
   end
 end
 
