@@ -28,8 +28,8 @@ class OpenTracingTest < Minitest::Test
     OpenTracing.global_tracer = tracer
 
     scope = Minitest::Mock.new
-    tracer.expect(:start_active_span, scope, ["span"])
-    OpenTracing.start_active_span("span")
+    tracer.expect(:start_active_span, scope, ['span'])
+    OpenTracing.start_active_span('span')
   end
 
   def test_global_tracer_start_span
