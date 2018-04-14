@@ -68,6 +68,14 @@ transferred to another callback or thread, but not `Scope`.
 
 ```ruby
 # Access to the active span is straightforward.
+
+span = OpenTracing.active_span
+if span
+  span.set_tag('...', '...')
+end
+
+# or
+
 scope = OpenTracing.scope_manager.active
 if scope
   scope.span.set_tag('...', '...')
@@ -104,7 +112,7 @@ end
 # Spans can be managed manually. This is equivalent to the more concise examples
 # above.
 span = OpenTracing.start_span('operation_name')
-OpenTracing.scope_manager.activate(span, true)
+OpenTracing.scope_manager.activate(span)
 scope = OpenTracing.scope_manager.active
 # Do things.
 
@@ -113,7 +121,7 @@ scope = OpenTracing.scope_manager.active
 # start_active_span.
 
 # create a root span, ignoring the currently active scope (if it's set)
-scope = OpenTracing.start_active_span('some_work', ignore_active_scope: true)
+scope = OpenTracing.start_active_span('operation_name', ignore_active_scope: true)
 
 # or
 span = OpenTracing.start_span('operation_name', ignore_active_scope: true)
