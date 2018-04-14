@@ -70,14 +70,13 @@ class OpenTracingTest < Minitest::Test
 
     scope_manager = Minitest::Mock.new
     scope = Minitest::Mock.new
-    span = Minitest::Mock.new
+    span = OpenTracing::Span::NOOP_INSTANCE
 
     tracer.expect(:scope_manager, scope_manager)
     scope_manager.expect(:active, scope)
     scope.expect(:span, span)
 
-    OpenTracing.active_span
-
+    assert_equal span, OpenTracing.active_span
     [tracer, scope_manager, scope].map(&:verify)
   end
 end

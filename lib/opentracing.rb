@@ -39,10 +39,10 @@ module OpenTracing
     def_delegators :global_tracer, :scope_manager, :start_active_span,
                    :start_span, :inject, :extract
 
-    # Convenience method to access to currently active span. This is equivalent
+    # Convenience method to access the currently active span. This is equivalent
     # to calling `OpenTracing.scope_manager.active.span`
     #
-    # @return [Span] the currently active span or Nil
+    # @return [Span, nil] the currently active span or nil
     def active_span
       scope = scope_manager.active
       scope.span if scope
