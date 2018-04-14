@@ -1,5 +1,11 @@
 # Changelog
 
+## Master
+
+* Fix global tracer delegators ([#28](https://github.com/opentracing/opentracing-ruby/pull/28))
+* Add Rubocop ([#29](https://github.com/opentracing/opentracing-ruby/pull/27))
+* Update license from MIT => Apache 2.0 ([#26](https://github.com/opentracing/opentracing-ruby/pull/26))
+
 ## 0.4.0
 
 * The tracer now implements the OpenTracing Scope API for in-process scope propagation([#21](https://github.com/opentracing/opentracing-ruby/pull/21))
