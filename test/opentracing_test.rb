@@ -18,8 +18,8 @@ class OpenTracingTest < Minitest::Test
     tracer = Minitest::Mock.new
     OpenTracing.global_tracer = tracer
 
-    scope = Minitest::Mock.new
-    tracer.expect(:scope_manager, scope)
+    scope_manager = Minitest::Mock.new
+    tracer.expect(:scope_manager, scope_manager)
     OpenTracing.scope_manager
 
     tracer.verify
