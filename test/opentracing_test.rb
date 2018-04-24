@@ -18,9 +18,11 @@ class OpenTracingTest < Minitest::Test
     tracer = Minitest::Mock.new
     OpenTracing.global_tracer = tracer
 
-    scope = Minitest::Mock.new
-    tracer.expect(:scope_manager, scope)
+    scope_manager = Minitest::Mock.new
+    tracer.expect(:scope_manager, scope_manager)
     OpenTracing.scope_manager
+
+    tracer.verify
   end
 
   def test_global_tracer_start_active_span
@@ -30,6 +32,8 @@ class OpenTracingTest < Minitest::Test
     scope = Minitest::Mock.new
     tracer.expect(:start_active_span, scope, ['span'])
     OpenTracing.start_active_span('span')
+
+    tracer.verify
   end
 
   def test_global_tracer_start_span
@@ -39,6 +43,8 @@ class OpenTracingTest < Minitest::Test
     span = Minitest::Mock.new
     tracer.expect(:start_span, span, ['span'])
     OpenTracing.start_span('span')
+
+    tracer.verify
   end
 
   def test_global_tracer_inject
@@ -51,6 +57,8 @@ class OpenTracingTest < Minitest::Test
 
     tracer.expect(:inject, nil, [span_context, format, carrier])
     OpenTracing.inject(span_context, format, carrier)
+
+    tracer.verify
   end
 
   def test_global_tracer_extract
@@ -62,6 +70,8 @@ class OpenTracingTest < Minitest::Test
 
     tracer.expect(:extract, nil, [format, carrier])
     OpenTracing.extract(format, carrier)
+
+    tracer.verify
   end
 
   def test_global_tracer_active_span
