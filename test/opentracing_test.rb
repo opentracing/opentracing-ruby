@@ -63,4 +63,20 @@ class OpenTracingTest < Minitest::Test
     tracer.expect(:extract, nil, [format, carrier])
     OpenTracing.extract(format, carrier)
   end
+
+  def test_global_tracer_active_span
+    tracer = Minitest::Mock.new
+    OpenTracing.global_tracer = tracer
+
+    scope_manager = Minitest::Mock.new
+    scope = Minitest::Mock.new
+    span = OpenTracing::Span::NOOP_INSTANCE
+
+    tracer.expect(:scope_manager, scope_manager)
+    scope_manager.expect(:active, scope)
+    scope.expect(:span, span)
+
+    assert_equal span, OpenTracing.active_span
+    [tracer, scope_manager, scope].map(&:verify)
+  end
 end
