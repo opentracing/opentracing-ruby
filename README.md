@@ -31,9 +31,9 @@ Or install it yourself as:
 ## Usage
 
 Everyday consumers of this `opentracing` gem really only need to worry
-about a couple of key abstractions: the `start_span` function, the `Span`
-interface, and binding a `Tracer` at runtime. Here are code snippets
-demonstrating some important use cases.
+about a couple of key abstractions: the `start_active_span` and `start_span`
+methods, the `Span` and `ScopeManager` interfaces, and binding a `Tracer`
+at runtime. Here are code snippets demonstrating some important use cases.
 
 ### Singleton initialization
 
@@ -41,7 +41,7 @@ As early as possible, call
 
 ```ruby
 require 'opentracing'
-OpenTracing.global_tracer = MyTracerImplementation.New(...)
+OpenTracing.global_tracer = MyTracerImplementation.new(...)
 ```
 
 Where `MyTracerImplementation` is your tracer. For testing, you can use
@@ -52,27 +52,90 @@ the provided `OpenTracing::Tracer`
 If you prefer direct control to singletons, manage ownership of the
 `Tracer` implementation explicitly.
 
-### Starting an empty trace by creating a "root span"
+### Scopes and within-process propagation
 
-It's always possible to create a "root" `Span` with no parent or other causal
-reference.
+For any thread, at most one `Span` may be "active". Of course there may be many
+other `Spans` involved with the thread which are (a) started, (b) not finished,
+and yet (c) not "active": perhaps they are waiting for I/O, blocked on a child
+`Span`, or otherwise off of the critical path.
+
+It's inconvenient to pass an active `Span` from function to function manually,
+so OpenTracing requires that every `Tracer` contains a `ScopeManager` that
+grants access to the active `Span` through a `Scope`. Any `Span` may be
+transferred to another callback or thread, but not `Scope`.
+
+#### Accessing the active Span through Scope
 
 ```ruby
-span = OpenTracing.start_span("operation_name")
-span.finish
+# Access to the active span is straightforward.
+
+span = OpenTracing.active_span
+if span
+  span.set_tag('...', '...')
+end
+
+# or
+
+scope = OpenTracing.scope_manager.active
+if scope
+  scope.span.set_tag('...', '...')
+end
 ```
 
-This example will start a span on the global tracer (initialized above). If
-you are managing your own tracer you'll need to call `start_span` on your
-tracer.
+### Starting a new Span
 
-### Creating a (child) Span given an existing (parent) Span
+The common case starts a `Scope` that's automatically registered for
+intra-process propagation via `ScopeManager`.
+
+Note that `start_active_span('...')` automatically finishes the span on
+`Scope#close` (`start_active_span('...', finish_on_close: false)` does not
+finish it, in contrast).
 
 ```ruby
-span = OpenTracing.start_span("parent")
-child = OpenTracing.start_span("child", child_of: span)
-child.finish
-span.finish
+# Automatic activation of the Span.
+# By default the active span will be finished when the returned scope is closed.
+# This can be controlled by passing finish_on_close parameter to
+# start_active_span
+scope = OpenTracing.start_active_span('operation_name')
+# Do things.
+
+# Block form of start_active_span
+# start_active_span optionally accepts a block. If a block is passed to
+# start_active_span it will yield the newly created scope. The scope will
+# be closed and its associated span will be finished unless
+# finish_on_close: false is passed to start_active_span.
+OpenTracing.start_active_span('operation_name') do |scope|
+# Do things.
+end
+
+# Manual activation of the Span.
+# Spans can be managed manually. This is equivalent to the more concise examples
+# above.
+span = OpenTracing.start_span('operation_name')
+OpenTracing.scope_manager.activate(span)
+scope = OpenTracing.scope_manager.active
+# Do things.
+
+# If there is an active Scope, it will act as the parent to any newly started
+# Span unless ignore_active_scope: true is passed to start_span or
+# start_active_span.
+
+# create a root span, ignoring the currently active scope (if it's set)
+scope = OpenTracing.start_active_span('operation_name', ignore_active_scope: true)
+
+# or
+span = OpenTracing.start_span('operation_name', ignore_active_scope: true)
+
+# It's possible to create a child Span given an existing parent Span by
+# using the child_of option.
+
+parent_scope = OpenTracing.start_active_span('parent_operation, ignore_active_scope: true)
+child_scope = OpenTracing.start_active_span('child_operation', child_of: parent_scope.span)
+
+# or
+parent_span = OpenTracing.start_span('parent_operation', ignore_active_scope: true)
+child_span = OpenTracing.start_span('child_operation', child_of: parent_span)
+
 ```
 
 ### Serializing to the wire
