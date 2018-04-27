@@ -2,6 +2,9 @@
 
 ## Master
 
+## 0.4.1
+
+* Add active_span convenience method to OpenTracing module ([#30](https://github.com/opentracing/opentracing-ruby/pull/30))
 * Fix global tracer delegators ([#28](https://github.com/opentracing/opentracing-ruby/pull/28))
 * Add Rubocop ([#29](https://github.com/opentracing/opentracing-ruby/pull/27))
 * Update license from MIT => Apache 2.0 ([#26](https://github.com/opentracing/opentracing-ruby/pull/26))
