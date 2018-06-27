@@ -74,6 +74,10 @@ class TracerTest < Minitest::Test
     assert_equal OpenTracing::ScopeManager::NOOP_INSTANCE, tracer.scope_manager
   end
 
+  def test_active_span
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, tracer.active_span
+  end
+
   private
 
   def tracer

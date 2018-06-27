@@ -12,6 +12,14 @@ module OpenTracing
       ScopeManager::NOOP_INSTANCE
     end
 
+    # @return [Span, nil] the active span. This is a shorthand for
+    #   `scope_manager.active.span`, and nil will be returned if
+    #   Scope#active is nil.
+    def active_span
+      scope = scope_manager.active
+      scope.span if scope
+    end
+
     # Returns a newly started and activated Scope.
     #
     # If the Tracer's ScopeManager#active is not nil, no explicit references
