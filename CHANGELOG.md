@@ -2,6 +2,8 @@
 
 ## Master
 
+* Add active_span method to Tracer ([#34](https://github.com/opentracing/opentracing-ruby/pull/34))
+
 ## 0.4.1
 
 * Add active_span convenience method to OpenTracing module ([#30](https://github.com/opentracing/opentracing-ruby/pull/30))
