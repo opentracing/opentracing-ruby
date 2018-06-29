@@ -20,7 +20,14 @@ module OpenTracing
       scope.span if scope
     end
 
-    # Returns a newly started and activated Scope.
+    # Returns a newly started and activated Scope
+    #
+    # @deprecated Use {#start_active_scope} instead
+    def start_active_span(*args, &block)
+      start_active_scope(*args, &block)
+    end
+
+    # Returns a newly started and activated Scope
     #
     # If the Tracer's ScopeManager#active is not nil, no explicit references
     # are provided, and `ignore_active_scope` is false, then an inferred
@@ -46,13 +53,13 @@ module OpenTracing
     #   yield the newly-started Scope. If `finish_on_close` is true then the
     #   Span will be finished automatically after the block is executed.
     # @return [Scope] The newly-started and activated Scope
-    def start_active_span(operation_name,
-                          child_of: nil,
-                          references: nil,
-                          start_time: Time.now,
-                          tags: nil,
-                          ignore_active_scope: false,
-                          finish_on_close: true)
+    def start_active_scope(operation_name,
+                           child_of: nil,
+                           references: nil,
+                           start_time: Time.now,
+                           tags: nil,
+                           ignore_active_scope: false,
+                           finish_on_close: true)
       Scope::NOOP_INSTANCE.tap do |scope|
         yield scope if block_given?
       end
