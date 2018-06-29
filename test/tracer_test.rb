@@ -31,6 +31,26 @@ class TracerTest < Minitest::Test
     end
   end
 
+  def test_start_active_scope
+    scope = OpenTracing::Tracer.new.start_active_scope('operation_name')
+    assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+  end
+
+  def test_start_active_scope_allows_references
+    references = [OpenTracing::Reference.child_of(OpenTracing::Span::NOOP_INSTANCE)]
+    scope = OpenTracing::Tracer.new.start_active_scope('operation_name', references: references)
+    assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+    assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+  end
+
+  def test_start_active_scope_accepts_block
+    OpenTracing::Tracer.new.start_active_scope('operation_name') do |scope|
+      assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
+      assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+    end
+  end
+
   def test_inject_text_map
     context = OpenTracing::SpanContext::NOOP_INSTANCE
     carrier = {}
