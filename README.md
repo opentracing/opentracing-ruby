@@ -7,7 +7,7 @@ This package is a Ruby platform API for OpenTracing.
 ## Required Reading
 
 In order to understand the Ruby platform API, one must first be familiar with the
-[OpenTracing project](http://opentracing.io) and
+[OpenTracing project](https://opentracing.io) and
 [terminology](https://opentracing.io/docs/overview/) more specifically.
 
 ## Installation
