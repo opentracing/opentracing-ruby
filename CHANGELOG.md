@@ -1,6 +1,8 @@
 # Changelog
 
-## Master
+## 0.4.2
+
+* Update opentracing.io links and scheme on README ([#38](https://github.com/opentracing/opentracing-ruby/pull/38))
 
 * Add active_span method to Tracer ([#34](https://github.com/opentracing/opentracing-ruby/pull/34))
 
