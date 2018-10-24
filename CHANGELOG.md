@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.3
+
+* Specify versions for development dependencies ([#40](https://github.com/opentracing/opentracing-ruby/pull/40))
+
 ## 0.4.2
 
 * Update opentracing.io links and scheme on README ([#38](https://github.com/opentracing/opentracing-ruby/pull/38))
