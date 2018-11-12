@@ -64,5 +64,10 @@ module OpenTracing
     def finish(end_time: Time.now)
       nil
     end
+
+    # Get the tags of this span
+    def tags
+      {}
+    end
   end
 end

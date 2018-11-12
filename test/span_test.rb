@@ -12,6 +12,7 @@ class SpanTest < Minitest::Test
 
   def test_tags
     span.set_tag('foo', 'bar')
+    assert_equal(span.tags, {})
   end
 
   def test_baggage
