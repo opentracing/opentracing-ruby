@@ -32,6 +32,17 @@ module OpenTracing
   # unrecognizable.
   FORMAT_RACK = 3
 
+  # Text format using Zipkin's B3 propagation for Tracer#inject and
+  # Tracer#extract.
+  #
+  # The carrier for FORMAT_B3 should be a Hash with the following
+  # (case-insensitive) keys:
+  #   x-b3-traceid
+  #   x-b3-parentspanid
+  #   x-b3-spanid
+  #   x-b3-sampled
+  FORMAT_B3 = 4
+
   class << self
     extend Forwardable
     # Global tracer to be used when OpenTracing.start_span, inject or extract is called

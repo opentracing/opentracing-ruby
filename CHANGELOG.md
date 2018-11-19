@@ -3,6 +3,7 @@
 ## 0.4.3
 
 * Specify versions for development dependencies ([#40](https://github.com/opentracing/opentracing-ruby/pull/40))
+* Add a format constant for B3 propagation
 
 ## 0.4.2
 
