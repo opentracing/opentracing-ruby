@@ -77,7 +77,8 @@ module OpenTracing
     # @param ignore_active_scope [Boolean] whether to create an implicit
     #   References#CHILD_OF reference to the ScopeManager#active.
     # @yield [Span] If passed an optional block, start_span will yield the
-    #   newly-created span to the block
+    #   newly-created span to the block. The span will be finished automatically
+    #   after the block is executed.
     # @return [Span, Object] If passed an optional block, start_span will return
     #  the block's return value, otherwise it returns the newly-started Span
     #  instance, which has not been automatically registered via the
