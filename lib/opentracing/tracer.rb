@@ -76,15 +76,21 @@ module OpenTracing
     # @param tags [Hash] Tags to assign to the Span at start time
     # @param ignore_active_scope [Boolean] whether to create an implicit
     #   References#CHILD_OF reference to the ScopeManager#active.
-    # @return [Span] the newly-started Span instance, which has not been
-    #   automatically registered via the ScopeManager
+    # @yield [Span] If passed an optional block, start_span will yield the
+    #   newly-created span to the block
+    # @return [Span, Object] If passed an optional block, start_span will return
+    #  the block's return value, otherwise it returns the newly-started Span
+    #  instance, which has not been automatically registered via the
+    #  ScopeManager
     def start_span(operation_name,
                    child_of: nil,
                    references: nil,
                    start_time: Time.now,
                    tags: nil,
                    ignore_active_scope: false)
-      Span::NOOP_INSTANCE
+      Span::NOOP_INSTANCE.tap do |span|
+        return yield span if block_given?
+      end
     end
 
     # Inject a SpanContext into the given carrier
