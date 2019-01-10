@@ -25,10 +25,13 @@ class TracerTest < Minitest::Test
   end
 
   def test_start_active_span_accepts_block
-    OpenTracing::Tracer.new.start_active_span('operation_name') do |scope|
+    value = OpenTracing::Tracer.new.start_active_span('operation_name') do |scope|
       assert_equal OpenTracing::Scope::NOOP_INSTANCE, scope
       assert_equal OpenTracing::Span::NOOP_INSTANCE, scope.span
+      true
     end
+
+    assert_equal true, value
   end
 
   def test_inject_text_map
