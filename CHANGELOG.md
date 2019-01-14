@@ -1,8 +1,12 @@
 # Changelog
 
-* Tracer#start_span now accepts an optional block. When passed a block, it returns the block's return value, otherwise it returns the newly-created span. See [Issue #13](https://github.com/opentracing/opentracing-ruby/issues/13)
+## 0.5.0
 
-* When passed an optional block, Tracer#start_active_span returns the block's return value, otherwise it returns the newly-created scope. This is a change in behavior as it previously returned a scope in both cases. See [Issue #41](https://github.com/opentracing/opentracing-ruby/issues/41).
+* Tracer#start_span now accepts an optional block. When passed a block, it returns the block's return value, otherwise it returns the newly-created span ([#45](https://github.com/opentracing/opentracing-ruby/pull/45)). See [Issue #13](https://github.com/opentracing/opentracing-ruby/issues/13).
+
+* When passed an optional block, Tracer#start_active_span returns the block's return value, otherwise it returns the newly-created scope. This is a change in behavior as it previously returned a scope in both cases([#45](https://github.com/opentracing/opentracing-ruby/pull/45)). See [Issue #41](https://github.com/opentracing/opentracing-ruby/issues/41).
+
+* Improved documentation for `log` and `log_kv` methods ([#44](https://github.com/opentracing/opentracing-ruby/pull/44))
 
 ## 0.4.3
 
