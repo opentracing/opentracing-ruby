@@ -129,7 +129,7 @@ span = OpenTracing.start_span('operation_name', ignore_active_scope: true)
 # It's possible to create a child Span given an existing parent Span by
 # using the child_of option.
 
-parent_scope = OpenTracing.start_active_span('parent_operation, ignore_active_scope: true)
+parent_scope = OpenTracing.start_active_span('parent_operation', ignore_active_scope: true)
 child_scope = OpenTracing.start_active_span('child_operation', child_of: parent_scope.span)
 
 # or
